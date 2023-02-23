@@ -1,6 +1,15 @@
 # Autodock Vina Virtual Screening Pipeline
 
-This Python code performs virtual screening of ligands against a receptor using Autodock Vina. It takes as input an SDF file containing ligand structures and a PDBQT file containing the receptor structure, and outputs a CSV file containing the binding energies of the ligands sorted in ascending order, and an SDF file containing the top 10 conformers ranked by binding energy.
+This Python code performs virtual screening of ligands against a receptor using Autodock Vina. It takes as input an SDF file containing ligand structures and a PDBQT file containing the receptor structure, and outputs a CSV file containing the binding energies of the ligands sorted in ascending order, an SDF file containing the top 10 conformers ranked by binding energy, and generates a protein-ligand complex for the top 10 conformers ranked by binding energy.
+
+
+## Prerequisites
+
+    Python 3.x
+    Pandas library (pip install pandas)
+    RDKit library (conda install -c conda-forge rdkit)
+    Autodock Vina executable
+
 
 ## Installation
 
@@ -16,27 +25,65 @@ To install Pandas and RDKit, you can use the following commands:
     pip install pandas
     pip install rdkit
 
+
 ## Usage
 
-To use the pipeline, simply run the autodock_vina_virtual_screening.py Python script, and specify the input and output files and parameters as necessary. The following parameters can be customized in the Python code:
+1.  Put the Autodock Vina executable in the same directory as the Python script.
 
-    ligand_file: Path to the input SDF file containing the ligand structures.
-    receptor_file: Path to the input PDBQT file containing the receptor structure.
-    vina_path: Path to the Autodock Vina executable on your system.
-    box_center: X, Y, and Z coordinates of the center of the search box in Angstroms.
-    box_size: X, Y, and Z dimensions of the search box in Angstroms.
-    result_file: Path to the output CSV file containing the binding energies of the ligands sorted by ascending order.
-    top_conformers_file: Path to the output SDF file containing the top 10 conformers ranked by binding energy.
+2.  Put the ligand file (in SDF format) and receptor file (in PDBQT format) in the same directory as the Python script.
 
-## Example usage:
+3.  Set the parameters in the script:
 
 
-    python autodock_vina_virtual_screening.py --ligand_file ligands.sdf --receptor_file receptor.pdbqt --vina_path /path/to/vina --box_center 10 10 10 --box_size 20 20 20 --result_file results.csv --top_conformers_file top_conformers.sdf
+```python
 
-## Output
+# Path to Autodock Vina executable
+vina_path = '/path/to/vina'
 
-The pipeline outputs a CSV file containing the binding energies of the ligands sorted by ascending order, and an SDF file containing the top 10 conformers ranked by binding energy. The CSV file has two columns: "Ligand" and "Binding Energy". The SDF file contains the ligand conformations ranked by binding energy, and can be visualized using a molecular viewer such as PyMOL.
+# Input ligand and receptor files
+ligand_file = 'ligands.sdf'
+receptor_file = 'receptor.pdbqt'
+
+# Output files
+result_file = 'results.csv'
+top_conformers_file = 'top_conformers.sdf'
+complex_dir = 'complexes'
+
+# Search box parameters
+box_center = (10, 10, 10)
+box_size = (20, 20, 20)
+
+# Number of top conformers to save
+num_top_conformers = 10
+
+```
+
+
+.   vina_path: the path to the Autodock Vina executable
+.   ligand_file: the name of the ligand file in SDF format
+.   receptor_file: the name of the receptor file in PDBQT format
+.   result_file: the name of the CSV file to save the docking results
+.   top_conformers_file: the name of the SDF file to save the top conformers
+.   complex_dir: the name of the directory to save the protein-ligand complexes
+.   box_center: the center of the search box in x, y, z coordinates
+.   box_size: the size of the search box in x, y, z dimensions
+.   num_top_conformers: the number of top conformers to save
+
+
+Run the script using the following command:
+
+```bash
+
+    python virtual_screening.py
+
+```
+4.  The script will run Autodock Vina for ligand-receptor docking, and save the results to the results.csv file.
+
+5.  The script will sort the results by binding energy score and save the top conformers to the top_conformers.sdf file.
+
+ 6.  The script will generate protein-ligand complexes for the top conformers and save them as PDB files in the complexes directory.
+
 
 ## License
 
-This pipeline is released under the MIT License. Feel free to use, modify, and distribute the code as needed. If you use this code in your research, please cite this repository.
+This project is licensed under the MIT License - see the LICENSE file for details.
