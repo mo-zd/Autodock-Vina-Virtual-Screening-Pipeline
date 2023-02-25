@@ -30,7 +30,7 @@ To install Pandas and RDKit, you can use the following commands:
 
 1.  Put the Autodock Vina executable in the same directory as the Python script.
 
-2.  Put the ligand file (in SDF format) and receptor file (in PDBQT format) in the same directory as the Python script.
+2.  Put the ligand fileS (in PDBQT format) and receptor file (in PDBQT format) in the seperate directory .
 
 3.  Set the parameters in the script:
 
