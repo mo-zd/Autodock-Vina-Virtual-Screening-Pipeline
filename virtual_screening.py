@@ -1,71 +1,46 @@
-import pandas as pd
-from rdkit import Chem
-from rdkit.Chem import AllChem
 import os
 
-# Path to Autodock Vina executable
-vina_path = '/path/to/vina'
+# ask for user inputs
+ligand_path = input("Enter the path of ligands in PDBQT format: ")
+protein_path = input("Enter the path of protein in PDBQT format: ")
+box_size = input("Enter the size of the box: ")
+center = input("Enter the center of the box: ")
 
-# Input ligand and receptor files
-ligand_file = 'ligands.sdf'
-receptor_file = 'receptor.pdbqt'
+# Generate configuration file
+config_file = open("config.txt", "w")
+config_file.write(f"receptor = {protein_path}\n")
+config_file.write(f"center_x = {center.split(',')[0]}\n")
+config_file.write(f"center_y = {center.split(',')[1]}\n")
+config_file.write(f"center_z = {center.split(',')[2]}\n")
+config_file.write(f"size_x = {box_size.split(',')[0]}\n")
+config_file.write(f"size_y = {box_size.split(',')[1]}\n")
+config_file.write(f"size_z = {box_size.split(',')[2]}\n")
+config_file.write("exhaustiveness = 8\n")
+config_file.close()
 
-# Output files
-result_file = 'results.csv'
-top_conformers_file = 'top_conformers.sdf'
-complex_dir = 'complexes'
+# perform virtual screening with Vina
+for file in os.listdir(ligand_path):
+    if file.endswith(".pdbqt"):
+        ligand_file = os.path.join(ligand_path, file)
+        result_file = os.path.join(ligand_path, file.split(".")[0] + "_result.pdbqt")
+        command = "vina --config config.txt --ligand {} --out {}".format(ligand_file, result_file)
+        print("Running: ", command)
+        os.system(command)
 
-# Search box parameters
-box_center = (10, 10, 10)
-box_size = (20, 20, 20)
+# read result files and extract VINA RESULT
+with open("results.csv", "w") as f:
+    f.write("Ligand Name, VINA RESULT\n")
+    for file in os.listdir(ligand_path):
+        if file.endswith("_result.pdbqt"):
+            ligand_name = file.split("_result.pdbqt")[0]
+            result_file = os.path.join(ligand_path, file)
+            with open(result_file, "r") as r:
+                lines = r.readlines()
+                vina_result = ""
+                for line in lines:
+                    if line.startswith("REMARK VINA RESULT:"):
+                        vina_result = line.split(":")[1].strip()
+                        break
+            f.write("{}, {}\n".format(ligand_name, vina_result))
 
-# Number of top conformers to save
-num_top_conformers = 10
-
-
-# Function to generate protein-ligand complex
-def generate_complex(ligand_file, receptor_file, output_file):
-    # Read ligand and receptor files
-    ligand = Chem.SDMolSupplier(ligand_file)[0]
-    receptor = Chem.MolFromPDBFile(receptor_file)
-
-    # Compute ligand conformation in complex with receptor
-    AllChem.EmbedMolecule(ligand)
-    complex = AllChem.CombineMols(receptor, ligand)
-    AllChem.EmbedMolecule(complex)
-
-    # Write complex to file
-    writer = Chem.PDBWriter(output_file)
-    writer.write(complex)
-    writer.close()
-
-
-# Run Autodock Vina for ligand-receptor docking
-os.system(f'{vina_path} --receptor {receptor_file} --ligand {ligand_file} --center_x {box_center[0]} --center_y {box_center[1]} --center_z {box_center[2]} --size_x {box_size[0]} --size_y {box_size[1]} --size_z {box_size[2]} --out {result_file} --log log.txt')
-
-# Read docking results from CSV file
-results = pd.read_csv(result_file, header=None, names=['Ligand', 'Binding Energy'])
-
-# Sort results by binding energy
-results = results.sort_values(by=['Binding Energy'])
-
-# Save top conformers to SDF file
-top_conformers = Chem.SDMolSupplier(ligand_file)
-writer = Chem.SDWriter(top_conformers_file)
-
-if not os.path.exists(complex_dir):
-    os.makedirs(complex_dir)
-
-for i in range(num_top_conformers):
-    conformer = top_conformers[i]
-    if conformer is not None:
-        writer.write(conformer)
-        # Generate protein-ligand complex for top conformers
-        ligand_file = f'{i+1}.sdf'
-        writer_ligand = Chem.SDWriter(ligand_file)
-        writer_ligand.write(conformer)
-        writer_ligand.close()
-        complex_file = os.path.join(complex_dir, f'{i+1}.pdb')
-        generate_complex(ligand_file, receptor_file, complex_file)
-
-writer.close()
+print("Virtual screening completed!")
