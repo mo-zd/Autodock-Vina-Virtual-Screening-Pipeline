@@ -37,37 +37,21 @@ To install Pandas and RDKit, you can use the following commands:
 
 ```python
 
-# Path to Autodock Vina executable
-vina_path = '/path/to/vina'
-
-# Input ligand and receptor files
-ligand_file = 'ligands.sdf'
-receptor_file = 'receptor.pdbqt'
-
-# Output files
-result_file = 'results.csv'
-top_conformers_file = 'top_conformers.sdf'
-complex_dir = 'complexes'
-
-# Search box parameters
-box_center = (10, 10, 10)
-box_size = (20, 20, 20)
-
-# Number of top conformers to save
-num_top_conformers = 10
+# ask for user inputs
+ligand_path = "Enter the path of ligands in PDBQT format: "
+protein_path = "Enter the path of protein in PDBQT format: "
+box_size = "Enter the size of the box: "
+center = "Enter the center of the box: "
 
 ```
 
 
 .   vina_path: the path to the Autodock Vina executable
-.   ligand_file: the name of the ligand file in SDF format
-.   receptor_file: the name of the receptor file in PDBQT format
-.   result_file: the name of the CSV file to save the docking results
-.   top_conformers_file: the name of the SDF file to save the top conformers
-.   complex_dir: the name of the directory to save the protein-ligand complexes
+.   ligand_path: the directory of the ligand files in PDBQT format
+.   protein_path: the directory of the receptor file in PDBQT format
 .   box_center: the center of the search box in x, y, z coordinates
 .   box_size: the size of the search box in x, y, z dimensions
-.   num_top_conformers: the number of top conformers to save
+
 
 
 Run the script using the following command:
