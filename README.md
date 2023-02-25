@@ -1,4 +1,5 @@
-# Autodock Vina Virtual Screening Pipeline
+# VinaScreen 
+## Autodock Vina Virtual Screening Pipeline
 
 This code performs virtual screening using the Autodock Vina software. It takes user inputs for the path of ligands in PDBQT format, protein in PDBQT format, size and center of the box, and output path for VINA results. It generates a configuration file for Vina and performs virtual screening on all the ligands in the input directory. It saves the results in the specified output directory and extracts the vina score for each ligand. It then sorts the results by score and finds the top 5 conformers. Finally, it generates PDB files of protein-ligand complex for the top 5 ligands ranked by binding energy.
 
