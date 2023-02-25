@@ -47,9 +47,13 @@ center = "Enter the center of the box: "
 
 
 .   vina_path: the path to the Autodock Vina executable
+
 .   ligand_path: the directory of the ligand files in PDBQT format
+
 .   protein_path: the directory of the receptor file in PDBQT format
+
 .   box_center: the center of the search box in x, y, z coordinates
+
 .   box_size: the size of the search box in x, y, z dimensions
 
 
