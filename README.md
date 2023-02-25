@@ -59,7 +59,7 @@ Run the script using the following command:
 
 ```bash
 
-    python virtual_screening.py
+    python VinaScreen.py
 
 ```
 5.  The script will run Autodock Vina for ligand-receptor docking, and save the results to the results.csv file.
