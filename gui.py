@@ -6,6 +6,8 @@ from config_generator import generate_config_file
 from complex_generator import generate_complex
 from result_parser import parse_vina_result
 from vina_executor import run_vina
+from tkinter import messagebox
+import traceback
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -102,16 +104,17 @@ class Application(tk.Frame):
                     result_file = os.path.join(output_path, file)
                     vina_result = parse_vina_result(result_file)
                     results_df = results_df.append({"Ligand Name": ligand_name, "VINA RESULT": vina_result}, ignore_index=True)
-
-            # generate complex files
-            generate_complex(protein_path, results_df, output_path)
+                    
+                    # generate complex files
+                    generate_complex(protein_path, ligand_file, ligand_name, output_path)
 
             # show success message
             tk.messagebox.showinfo("Virtual Screening", "Virtual Screening completed successfully.")
 
         except Exception as e:
             # show error message
-            tk.messagebox.showerror("Error", str(e))
+            error_message = str(e) + '\n\n' + traceback.format_exc()
+            tk.messagebox.showerror("Error", error_message)
 
 root = tk.Tk()
 app = Application(master=root)
