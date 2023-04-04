@@ -37,10 +37,12 @@ To install Pandas , you can use the following commands:
 ```python
 
 # ask for user inputs
-ligand_path = "Enter the path of ligands in PDBQT format: "
-protein_path = "Enter the path of protein in PDBQT format: "
-box_size = "Enter the size of the box: "
-center = "Enter the center of the box: "
+Enter the path of ligands in PDBQT format: <ligand_path>
+Enter the path of protein in PDBQT format: <protein_path>
+Enter the size of the box: <box_size>
+Enter the center of the box: <center>
+Enter the output path for VINA results: <output_path>
+Enter the path of Autodock Vina executable: <vina_path>
 
 ```
 
