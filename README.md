@@ -33,7 +33,8 @@ To run the GUI, execute the following command from the root directory of the rep
 
 ```
 The GUI will open, and you can select the ligand file, protein folder, output folder, and specify the box size and center for the virtual screening.
-![Capture](https://user-images.githubusercontent.com/91246296/229913343-c31a8c09-f85c-4cbc-b8da-ab4b1488c283.JPG)
+
+![Capture](https://user-images.githubusercontent.com/91246296/229913629-b1e9a5b8-e131-422b-9e2b-ae063a911cb3.JPG)
 
 
 Click on the "Run Virtual Screening" button to start the virtual screening. The progress of the virtual screening will be displayed in the console.
