@@ -1,0 +1,11 @@
+def generate_config_file(protein_path, box_size, center):
+    config_file = open("config.txt", "w")
+    config_file.write(f"receptor = {protein_path}\n")
+    config_file.write(f"center_x = {center.split(',')[0]}\n")
+    config_file.write(f"center_y = {center.split(',')[1]}\n")
+    config_file.write(f"center_z = {center.split(',')[2]}\n")
+    config_file.write(f"size_x = {box_size.split(',')[0]}\n")
+    config_file.write(f"size_y = {box_size.split(',')[1]}\n")
+    config_file.write(f"size_z = {box_size.split(',')[2]}\n")
+    config_file.write("exhaustiveness = 8\n")
+    config_file.close()
