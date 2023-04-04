@@ -10,6 +10,7 @@ This is a graphical user interface (GUI) for running virtual screening with Auto
 
     Python 3.x
     Pandas library (pip install pandas)
+    Tkinter 
     Autodock Vina executable
 
 
@@ -22,6 +23,7 @@ This is a graphical user interface (GUI) for running virtual screening with Auto
 3.To install Pandas , you can use the following commands:
 
     pip install pandas
+  
 
 4.Download Autodock Vina executable from the official website: http://vina.scripps.edu/download.html
 
